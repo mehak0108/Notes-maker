@@ -1,3 +1,16 @@
 <resources>
-    <string name="app_name">Notes-maker</string>
+    <!--Main page-->
+    <string name="app_name">Notes Maker</string>
+    <string name="title_activity_main">Notes</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="item1">OCR Scan</string>
+
+    <!--Login page-->
+    <string name="btn_txt">Login</string>
+
 </resources>
