@@ -17,7 +17,7 @@ public class PhrasesActivity extends AppCompatActivity {
 
     String result;
     ArrayList<String> wordsArry;
-    KeyPhrase[] keyPhrases;
+    String[] keyPhrases;
     TextView tv;
     TextView tvphraseid;
 
@@ -32,20 +32,26 @@ public class PhrasesActivity extends AppCompatActivity {
         if(savedInstanceState == null){
             Bundle bundle = getIntent().getExtras();
             result = bundle.getString("Words");
+            Log.v("result",result);
+
             FetchResult fetchResult = new FetchResult();
             fetchResult.execute();
+
         }
 
     }
 
-    class FetchResult extends AsyncTask<String, Void, KeyPhrase[] >{
+    class FetchResult extends AsyncTask<String, Void, String[] >{
 
-        String jsonString;
+        String jsonString =null;
         @Override
-        protected KeyPhrase[] doInBackground(String... strings) {
+        protected String[] doInBackground(String... strings) {
 
             try {
                  jsonString = GetKeyPhrases.GetJson(result);
+
+                 Log.e("json" , jsonString);
+
                  keyPhrases = getWords(jsonString);
 
             } catch (Exception e) {
@@ -56,25 +62,35 @@ public class PhrasesActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(KeyPhrase[] keyPhrases) {
+        protected void onPostExecute(String[] words) {
 
-            tv.setText(keyPhrases.toString());
-            super.onPostExecute(keyPhrases);
+            for(int i=0;i<words.length-1; i++) {
+                tv.setText(words[i] + " " + words[(i + 1)]);
+            }
+            super.onPostExecute(words);
         }
 
-        KeyPhrase kp;
-        KeyPhrase keyPhrase[] = null;
-        public KeyPhrase[] getWords(String str) throws JSONException {
+        /*KeyPhrase kp;
+        KeyPhrase keyPhrase[] = null;*/
+        String[] resultList = null;
+        public String[] getWords(String str) throws JSONException {
             final String ID = "id";
             final String DOCUMENTS = "documents";
             final String KEY_PHRASE = "keyPhrases";
             JSONObject jsonObject = new JSONObject(str);
             JSONArray jsonArray = jsonObject.getJSONArray(DOCUMENTS);
-            keyPhrase = new KeyPhrase[jsonArray.length()];
+            JSONObject jobj = jsonArray.getJSONObject(0);
+            JSONArray jarry = jobj.getJSONArray(KEY_PHRASE);
 
-            for (int i=0; i<jsonArray.length() ; i++){
+            resultList = new String[jarry.length()];
+            for(int i=0;i<jarry.length();i++){
+                //Log.e("words",jarry.getString(0));
+                resultList[i] = jarry.getString(i);
+            }
+
+            /*for (int i=0; i<jsonArray.length() ; i++){
                 JSONObject jobj = jsonArray.getJSONObject(i);
-
+                keyPhrase = new KeyPhrase[jsonArray.length()];
                 kp = new KeyPhrase();
                 kp.id = jobj.getString(ID);
                 Log.e("Id",kp.id);
@@ -86,10 +102,9 @@ public class PhrasesActivity extends AppCompatActivity {
 
                 kp.res = wordsArry;
                 keyPhrase[i] = kp;
+            }*/
 
-            }
-
-            return keyPhrase;
+            return resultList;
 
         }
     }
