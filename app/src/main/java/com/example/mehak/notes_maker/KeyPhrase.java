@@ -6,14 +6,17 @@ import android.os.Parcelable;
 import java.util.ArrayList;
 
 public class KeyPhrase implements Parcelable{
-    public String id;
-    public ArrayList<String> res;
+    public String name;
+    public String url;
+    public String language;
 
     public KeyPhrase(){}
 
     public KeyPhrase(Parcel in){
-        id = in.readString();
-        res = in.readArrayList(null);
+        name = in.readString();
+        //url = in.readArrayList(null);
+        url = in.readString();
+        language = in.readString();
     }
     @Override
     public int describeContents() {
@@ -22,9 +25,9 @@ public class KeyPhrase implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(id);
-        dest.writeList(res);
-
+        dest.writeString(name);
+        dest.writeString(url);
+        dest.writeString(language);
     }
 
     public static final Parcelable.Creator<KeyPhrase> CREATOR=new Parcelable.Creator<KeyPhrase>(){

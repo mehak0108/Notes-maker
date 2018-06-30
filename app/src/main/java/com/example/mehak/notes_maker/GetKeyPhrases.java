@@ -15,7 +15,7 @@ public class GetKeyPhrases {
     static String accessKey = "bd73ce91f606400cba499f24618e8958";
     static String host = "https://southeastasia.api.cognitive.microsoft.com";
 
-    static String path = "/text/analytics/v2.0/keyPhrases";
+    static String path = "/text/analytics/v2.0/entities";
 
     public static String GetJson (String s) throws Exception {
 

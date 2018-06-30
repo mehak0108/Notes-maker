@@ -5,9 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.mehak.notes_maker.KeyPhrase;
 import com.example.mehak.notes_maker.R;
 
 import java.util.ArrayList;
@@ -16,14 +16,14 @@ import java.util.List;
 public class PhraseAdapter extends BaseAdapter {
 
     private Context context;
-    private List<String> list;
+    private List<KeyPhrase> list;
 
-    public PhraseAdapter(Context context, ArrayList<String> list){
+    public PhraseAdapter(Context context, ArrayList<KeyPhrase> list){
         this.context = context;
         this.list = list;
     }
 
-    public void add(String s){
+    public void add(KeyPhrase s){
         this.list.add(s);
     }
     @Override
@@ -51,20 +51,17 @@ public class PhraseAdapter extends BaseAdapter {
         }
 
 
-        Movie currentMovie;
-        currentMovie= getItem(position);
+        KeyPhrase currentPhrase;
+        currentPhrase = list.get(position);
 
-        TextView nameTextView= (TextView)listItemView.findViewById(R.id.movieName);
-        nameTextView.setText(currentMovie.title);
+        TextView nameTextView= (TextView)listItemView.findViewById(R.id.wordName);
+        nameTextView.setText("Word:"+ currentPhrase.name);
 
-        TextView genreTextView= (TextView)listItemView.findViewById(R.id.movieRating);
-        genreTextView.setText("User Rating: " + currentMovie.user_rating);
+        TextView urlTextView= (TextView)listItemView.findViewById(R.id.wordUrl);
+        urlTextView.setText("URL: " + currentPhrase.url);
 
-        TextView langTextView= (TextView)listItemView.findViewById(R.id.movieLanguage);
-        langTextView.setText("Language: " + currentMovie.language);
-
-        ImageView imageView = (ImageView) listItemView.findViewById(R.id.image);
-        Picasso.with(context).load(list.get(position).poster_path).into(imageView);
+        TextView langTextView= (TextView)listItemView.findViewById(R.id.wordLanguage);
+        langTextView.setText("Language: " + currentPhrase.language);
 
         return listItemView;
     }
