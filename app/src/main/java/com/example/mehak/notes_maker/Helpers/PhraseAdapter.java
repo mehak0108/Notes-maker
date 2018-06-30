@@ -1,6 +1,7 @@
 package com.example.mehak.notes_maker.Helpers;
 
 import android.content.Context;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,10 +56,12 @@ public class PhraseAdapter extends BaseAdapter {
         currentPhrase = list.get(position);
 
         TextView nameTextView= (TextView)listItemView.findViewById(R.id.wordName);
-        nameTextView.setText("Word:"+ currentPhrase.name);
+        nameTextView.setText("Word: "+ currentPhrase.name);
 
         TextView urlTextView= (TextView)listItemView.findViewById(R.id.wordUrl);
-        urlTextView.setText("URL: " + currentPhrase.url);
+        String htmlString=currentPhrase.url;
+        urlTextView.setText("URL: " + Html.fromHtml(htmlString));
+        //urlTextView.setText("URL: " + currentPhrase.url);
 
         TextView langTextView= (TextView)listItemView.findViewById(R.id.wordLanguage);
         langTextView.setText("Language: " + currentPhrase.language);

@@ -32,23 +32,5 @@
         android:src="@android:drawable/btn_star_big_off" />
 </android.support.design.widget.CoordinatorLayout>
 
-    <!--RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".PhrasesActivity">
 
-        <TextView
-            android:id="@+id/tv_phraseid"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textColor="@android:color/black"/>
-        <TextView
-            android:id="@+id/tv_phrase"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="10dp"/>
-
-    </RelativeLayout-->
 

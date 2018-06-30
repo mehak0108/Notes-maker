@@ -2,6 +2,8 @@ package com.example.mehak.notes_maker;
 
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -122,18 +124,19 @@ public class PhraseFragment extends Fragment {
         adapter = new PhraseAdapter(getActivity(), phraseList);
         lv.setAdapter(adapter);
 
-        /*lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (isNetworkAvailable()) {
-                    ((ItemSelected) getActivity()).onItemSelected(moviesList.get(position));
-                }
+                //if (isNetworkAvailable()) {
+                    ((ItemSelected) getActivity()).onItemSelected(phraseList.get(position));
+
+                /*}
                 else {
                     Toast.makeText(getContext(), "No Connection!\nCheck your Internet Connection",
                             Toast.LENGTH_LONG).show();
-                }
+                }*/
             }
-        });*/
+        });
         return rootView;
     }
 
@@ -165,52 +168,50 @@ public class PhraseFragment extends Fragment {
             for (KeyPhrase current : keys)
                 adapter.add(current);
             adapter.notifyDataSetChanged();
+
+            //Log.v("done","done");
         }
-    }
+        KeyPhrase[] resultList;
+
+        public KeyPhrase[] getWords(String str) throws JSONException {
 
 
-    public KeyPhrase[] getWords(String str) throws JSONException {
-        //final String ID = "id";
-        KeyPhrase[] resultList = null;
+            final String DOCUMENTS = "documents";
+            final String ENTITIES = "entities";
+            final String NAME = "name";
+            final String WIKIPEDIALANGUAGE = "wikipediaLanguage";
+            final String WIKIPEDIAURL = "wikipediaUrl";
 
-        final String DOCUMENTS = "documents";
-        final String ENTITIES = "entities";
-        final String NAME = "name";
-        final String WIKIPEDIALANGUAGE = "wikipediaLanguage";
-        final String WIKIPEDIAURL = "wikipediaUrl";
+            JSONObject jsonObject = new JSONObject(str);
+            JSONArray jsonArray = jsonObject.getJSONArray(DOCUMENTS);
+            JSONObject jobj = jsonArray.getJSONObject(0);
+            JSONArray jarry = jobj.getJSONArray(ENTITIES);
 
-        JSONObject jsonObject = new JSONObject(str);
-        JSONArray jsonArray = jsonObject.getJSONArray(DOCUMENTS);
-        JSONObject jobj = jsonArray.getJSONObject(0);
-        JSONArray jarry = jobj.getJSONArray(ENTITIES);
+            if(jarry.length()>0) {
+                resultList = new KeyPhrase[jarry.length()];
+                for (int i = 0; i < jarry.length(); i++) {
+                    JSONObject obj = jarry.getJSONObject(i);
+                    kp = new KeyPhrase();
+                    kp.name = obj.getString(NAME);
+                    Log.e("name",kp.name);
+                    kp.url = obj.getString(WIKIPEDIAURL);
+                    Log.e("url",kp.url);
+                    kp.language = obj.getString(WIKIPEDIALANGUAGE);
+                    Log.e("lang",kp.language);
 
-        if(jarry.length()>0) {
-            resultList = new KeyPhrase[jarry.length()];
-            for (int i = 0; i < jarry.length(); i++) {
-                JSONObject obj = jarry.getJSONObject(i);
-                kp = new KeyPhrase();
-                kp.name = obj.getString(NAME);
-                Log.e("name",kp.name);
-                kp.url = obj.getString(WIKIPEDIAURL);
-                Log.e("url",kp.url);
-                kp.language = obj.getString(WIKIPEDIALANGUAGE);
-                Log.e("lang",kp.language);
+                    resultList[i] = kp;
+                    //phraseList.add(kp);
+                }
 
-                resultList[i] = kp;
-                phraseList.add(kp);
+                return resultList;
             }
+            else
+                return null;
 
-            /*resultList = new String[jarry.length()];
-            for(int i=0;i<jarry.length();i++){
-                //Log.e("words",jarry.getString(0));
-                resultList[i] = jarry.getString(i);
-            }*/
-
-            return resultList;
         }
-        else
-            return null;
-
     }
+
+
+
 
 }

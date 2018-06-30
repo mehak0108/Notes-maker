@@ -14,7 +14,6 @@ public class KeyPhrase implements Parcelable{
 
     public KeyPhrase(Parcel in){
         name = in.readString();
-        //url = in.readArrayList(null);
         url = in.readString();
         language = in.readString();
     }

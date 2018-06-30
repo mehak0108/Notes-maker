@@ -1,6 +1,8 @@
 package com.example.mehak.notes_maker;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,13 +19,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-public class PhrasesActivity extends AppCompatActivity {
-
-    String result;
-    ArrayList<KeyPhrase> wordsArry;
-    //String[] keyPhrases;
-    TextView tv;
-    TextView tvphraseid;
+public class PhrasesActivity extends AppCompatActivity implements ItemSelected{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,18 +40,13 @@ public class PhrasesActivity extends AppCompatActivity {
 
         }
 
-        /*tv = (TextView)findViewById(R.id.tv_phrase);
-        tvphraseid = (TextView)findViewById(R.id.tv_phraseid);
+    }
 
-        if(savedInstanceState == null){
-            Bundle bundle = getIntent().getExtras();
-            result = bundle.getString("Words");
-            Log.v("result",result);*/
+    @Override
+    public void onItemSelected(KeyPhrase keyPhrase) {
 
-            //FetchResult fetchResult = new FetchResult();
-            //fetchResult.execute();
-
-
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(keyPhrase.url));
+        startActivity(browserIntent);
 
     }
 
