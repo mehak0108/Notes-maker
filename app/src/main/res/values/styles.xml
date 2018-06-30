@@ -17,4 +17,12 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="GridStyle">
+        <item name= "android:numColumns">2</item>
+        <item name="android:gravity">center</item>
+        <item name="android:clipChildren">true</item>
+        <item name="android:stretchMode">columnWidth</item>
+        <item name="android:adjustViewBounds">true</item>
+    </style>
+
 </resources>

@@ -8,4 +8,6 @@
     <color name="white">#ffffff</color>
     <color name="bg_gradient_start">#31244e</color>
     <color name="bg_gradient_end">#6b394c</color>
+    <color name="rose">#ffdcf3</color>
+
 </resources>
