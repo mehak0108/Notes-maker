@@ -27,7 +27,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.io.File;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements ItemSelectedNotes, NavigationView.OnNavigationItemSelectedListener{
 
     public static final int REQUESTCODE_RECORDING = 3;
     public static final int AUDIO_PERMISSIONS_REQUEST = 2;
@@ -92,6 +92,9 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
+
+            Intent SettingsIntent = new Intent(MainActivity.this, OCRScan.class);
+            startActivity(SettingsIntent);
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
 
@@ -108,5 +111,14 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onItemSelect(String s) {
+
+        Log.e("working","working");
+        Intent intent = new Intent(this,PhrasesActivity.class);
+        intent.putExtra("Words",s);
+        startActivity(intent);
     }
 }

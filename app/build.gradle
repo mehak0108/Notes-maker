@@ -47,6 +47,8 @@ dependencies {
     implementation 'com.android.support:cardview-v7:27.1.1'
     implementation 'com.ToxicBakery.viewpager.transforms:view-pager-transforms:1.2.32@aar'
 
+    implementation 'com.google.android.gms:play-services-vision:11.8.0'
+
 
 }
 

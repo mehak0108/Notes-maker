@@ -10,10 +10,12 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.mehak.notes_maker.Helpers.GridAdapter;
@@ -93,7 +95,6 @@ public class MainFragment extends Fragment {
     }
 
     public MainFragment() {
-        // Required empty public constructor
     }
 
 
@@ -114,8 +115,26 @@ public class MainFragment extends Fragment {
 
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-        GridView notes_gridview = (GridView) rootView.findViewById(R.id.notes_gridview);
+        ListView notes_gridview = (ListView) rootView.findViewById(R.id.notes_listview);
+        gridAdapter = new GridAdapter(getContext(),notes);
         notes_gridview.setAdapter(gridAdapter);
+
+        /*notes_gridview.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                view.getParent().requestDisallowInterceptTouchEvent(true);
+                return false;
+            }
+        });*/
+
+        notes_gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.e("ok","ok");
+                ((ItemSelectedNotes)getActivity()).onItemSelect(notes.get(position));
+                Log.e("ok","ok");
+            }
+        });
 
         mfab = (FloatingActionButton)rootView.findViewById(R.id.fab);
         mfab.setOnClickListener(new View.OnClickListener() {
@@ -126,13 +145,7 @@ public class MainFragment extends Fragment {
                 startActivity(intent);
             }
         });
-        /*movies_gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ((Callback)getActivity()).onItemSelected(movies.get(position));
 
-            }
-        });*/
 
         return rootView;
     }
