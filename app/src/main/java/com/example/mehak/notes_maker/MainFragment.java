@@ -36,6 +36,7 @@ public class MainFragment extends Fragment {
     private DatabaseReference mDatabase;
     ArrayList<String> notes;
     GridAdapter gridAdapter;
+    public static final String MAIN_DETAIL = "mainDetails";
     FloatingActionButton mfab;
 
     public void onCreate(Bundle savedInstanceState) {
@@ -83,7 +84,7 @@ public class MainFragment extends Fragment {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        //outState.putParcelableArrayList("movies", movies);
+        //outState.putParcelableArrayList("notes", notes);
         super.onSaveInstanceState(outState);
         Log.v("ok", "onSaveInstanceState");
 
@@ -97,12 +98,12 @@ public class MainFragment extends Fragment {
     public MainFragment() {
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        Bundle args = getArguments();
+        Log.e("created","created");
+
         if(savedInstanceState==null || !savedInstanceState.containsKey("notes")){
             notes = new ArrayList<String>();
             gridAdapter = new GridAdapter(getContext(),notes);
@@ -113,9 +114,8 @@ public class MainFragment extends Fragment {
             gridAdapter = new GridAdapter(getContext(),notes);
         }
 
-
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-        ListView notes_gridview = (ListView) rootView.findViewById(R.id.notes_listview);
+        GridView notes_gridview = (GridView) rootView.findViewById(R.id.notes_gridview);
         gridAdapter = new GridAdapter(getContext(),notes);
         notes_gridview.setAdapter(gridAdapter);
 

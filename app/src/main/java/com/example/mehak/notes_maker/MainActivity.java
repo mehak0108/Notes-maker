@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity
 
     public static final int REQUESTCODE_RECORDING = 3;
     public static final int AUDIO_PERMISSIONS_REQUEST = 2;
+    public static FragmentManager manager;
 
 
     @Override
@@ -39,7 +41,21 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        manager = getSupportFragmentManager();
 
+        if (savedInstanceState == null){
+            Bundle args = new Bundle();
+            if (getIntent().getParcelableExtra("Words")== null)
+                Log.v("not ok", "intent is null");
+            else
+                Log.v("ok", "intent is not null");
+            args.putParcelable(MainFragment.MAIN_DETAIL,(getIntent().getParcelableExtra("Words")));
+            MainFragment fragment = new MainFragment();
+            fragment.setArguments(args);
+            getSupportFragmentManager().beginTransaction().replace(R.id.main_container, fragment).commit();
+            //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        }
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -120,5 +136,18 @@ public class MainActivity extends AppCompatActivity
         Intent intent = new Intent(this,PhrasesActivity.class);
         intent.putExtra("Words",s);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onResume() {
+
+        Log.e("ok","ok");
+        super.onResume();
+        /*MainFragment mf=(MainFragment) getSupportFragmentManager().
+                findFragmentById(R.id.notes_fragment);
+        mf.newInstance();*/
+
+        Log.e("ok2","ok2");
+
     }
 }
