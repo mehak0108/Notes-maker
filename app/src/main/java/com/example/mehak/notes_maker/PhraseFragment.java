@@ -3,6 +3,8 @@ package com.example.mehak.notes_maker;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -100,24 +102,26 @@ public class PhraseFragment extends Fragment {
 
             Bundle bundle = getActivity().getIntent().getExtras();
             result = bundle.getString("Words");
+            //if(result!=null)
             Log.v("result",result);
 
             phraseList = new ArrayList<KeyPhrase>();
             adapter = new PhraseAdapter(getActivity(), phraseList);
 
-            FetchResult fetchResult = new FetchResult();
-            fetchResult.execute();
+            if(isNetworkAvailable()){
+                FetchResult fetchResult = new FetchResult();
+                fetchResult.execute();
+            }
+            else{
+                Toast.makeText(getActivity(),"Please check the internet connection!",Toast.LENGTH_SHORT).show();
+
+            }
+
         } else {
             phraseList = savedInstanceState.getParcelableArrayList("phraseList");
             adapter = new PhraseAdapter(getActivity(), phraseList);
 
         }
-
-        /*Bundle args = getArguments();
-        if(args!=null){
-            kp = args.getParcelable(PHRASE_DETAIL);
-            result = kp.name;
-        }*/
 
         View rootView = inflater.inflate(R.layout.phrase_list, container, false);
         ListView lv = (ListView) rootView.findViewById(R.id.list);
@@ -138,6 +142,13 @@ public class PhraseFragment extends Fragment {
             }
         });
         return rootView;
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getActivity().getSystemService(getContext().CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
     class FetchResult extends AsyncTask<String, Void, KeyPhrase[] > {
@@ -165,13 +176,16 @@ public class PhraseFragment extends Fragment {
         @Override
         protected void onPostExecute(KeyPhrase[] keys) {
 
-            for (KeyPhrase current : keys)
-                adapter.add(current);
-            adapter.notifyDataSetChanged();
-
-            //Log.v("done","done");
+            if(keys.length>0){
+                for (KeyPhrase current : keys)
+                    adapter.add(current);
+                adapter.notifyDataSetChanged();
+            }
+            else{
+                Toast.makeText(getActivity(),"No specific keyword available!",Toast.LENGTH_SHORT).show();
+            }
         }
-        KeyPhrase[] resultList;
+        KeyPhrase[] resultList = null;
 
         public KeyPhrase[] getWords(String str) throws JSONException {
 
@@ -186,9 +200,9 @@ public class PhraseFragment extends Fragment {
             JSONArray jsonArray = jsonObject.getJSONArray(DOCUMENTS);
             JSONObject jobj = jsonArray.getJSONObject(0);
             JSONArray jarry = jobj.getJSONArray(ENTITIES);
-
+            resultList = new KeyPhrase[jarry.length()];
             if(jarry.length()>0) {
-                resultList = new KeyPhrase[jarry.length()];
+
                 for (int i = 0; i < jarry.length(); i++) {
                     JSONObject obj = jarry.getJSONObject(i);
                     kp = new KeyPhrase();
@@ -202,16 +216,9 @@ public class PhraseFragment extends Fragment {
                     resultList[i] = kp;
                     //phraseList.add(kp);
                 }
-
-                return resultList;
             }
-            else
-                return null;
-
+            return resultList;
         }
     }
-
-
-
 
 }

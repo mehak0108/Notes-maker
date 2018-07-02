@@ -2,9 +2,12 @@ package com.example.mehak.notes_maker;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.speech.RecognizerIntent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,6 +28,7 @@ public class NotesActivity extends AppCompatActivity {
     private ImageButton btnSpeak;
     private final int REQ_CODE_SPEECH_INPUT = 100;
     DatabaseReference myRef;
+    public static String mLanguage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,12 +98,50 @@ public class NotesActivity extends AppCompatActivity {
 
         int id = item.getItemId();
         if(id == R.id.action_phrase){
-            Intent intent  = new Intent(NotesActivity.this, PhrasesActivity.class);
-            intent.putExtra("Words", result.get(0));
-            startActivity(intent);
 
+            if(result == null){
+                Toast.makeText(this,"Please enter a text!",Toast.LENGTH_SHORT).show();
+
+            }else{
+                Intent intent  = new Intent(NotesActivity.this, PhrasesActivity.class);
+                intent.putExtra("Words", result.get(0));
+                startActivity(intent);
+            }
+        }
+        if(id == R.id.action_language){
+            Intent intent = new Intent(NotesActivity.this,SettingsActivity.class);
+            //intent.putExtra("Words",result.get(0));
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SharedPreferences prefs= PreferenceManager.getDefaultSharedPreferences(this);
+        String sort_by = prefs.getString(getString(R.string.pref_general_key), getString(R.string.english));
+        if (mLanguage!=null && !sort_by.equals(mLanguage)){
+            LanguageFragment mf=(LanguageFragment) getSupportFragmentManager().
+                    findFragmentById(R.id.lang_notes);
+            Log.e("done","gggg");
+            /*Bundle args = new Bundle();
+            if (getIntent().getParcelableExtra("Words")== null)
+                Log.v("not ok", "intent is null");
+            else
+                Log.v("ok", "intent is not null");
+            args.putParcelable(LanguageFragment.LANG_DETAIL,(getIntent().getParcelableExtra("Words")));
+            LanguageFragment fragment = new LanguageFragment();
+            fragment.setArguments(args);
+            getSupportFragmentManager().beginTransaction().replace(R.id.lang_container, fragment).commit();*/
+            //mf = new LanguageFragment();
+            //mf.updateMovie();
+            if(mf!=null)
+                mf.onPreferenceChanged(sort_by);
+
+        }
+        mLanguage= sort_by;
+
     }
 
 

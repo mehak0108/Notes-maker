@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".NotesActivity"
+    android:id="@+id/lang_notes"
+    android:name="com.example.mehak.notes_maker.LanguageFragment"
     xmlns:card_view ="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout

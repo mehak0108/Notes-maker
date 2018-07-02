@@ -4,6 +4,8 @@ package com.example.mehak.notes_maker;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -107,7 +109,13 @@ public class MainFragment extends Fragment {
         if(savedInstanceState==null || !savedInstanceState.containsKey("notes")){
             notes = new ArrayList<String>();
             gridAdapter = new GridAdapter(getContext(),notes);
-            getNotes();
+            if(isNetworkAvailable()){
+                getNotes();
+            }
+            else{
+                Toast.makeText(getActivity(),"Please check the internet connection!",Toast.LENGTH_SHORT).show();
+            }
+
         }
         else{
             notes = new ArrayList<String>();
@@ -150,6 +158,13 @@ public class MainFragment extends Fragment {
         return rootView;
     }
 
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getActivity().getSystemService(getContext().CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
     public void getNotes(){
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -162,7 +177,6 @@ public class MainFragment extends Fragment {
 
                 for (DataSnapshot q : dataSnapshot.getChildren()) {
                      Log.v("ok", q.getKey());
-                    //movieReview = new MovieReview();
                     String s;
                      s = q.getValue(String.class);
                      Log.v("hmm1111", q.getValue(String.class));

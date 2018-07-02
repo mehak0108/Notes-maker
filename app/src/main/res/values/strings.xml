@@ -20,7 +20,24 @@
     <string name="tap_on_mic">Tap on mic to speak</string>
     <string name="action_phrase">Phrases</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Languages-->
+    <string name="pref_general_title">Select Language</string>
+    <string-array name="pref_general_entries">
+        <item>Italian</item>
+        <item>Greek</item>
+        <item>Japanese</item>
+        <item>Korean</item>
+        <item>Persian</item>
+        <item>Punjabi</item>
+    </string-array>
+    <string-array name="pref_general_entryValues">
+        <item>popularity</item>
+        <item>vote_average</item>
+        <item>favorites</item>
+    </string-array>
+    <string name="pref_general_summary">Select a language to which text is to be converted</string>
+    <string name="pref_general_key">select_language</string>
+    <string name="english">English</string>
+
 
 </resources>
