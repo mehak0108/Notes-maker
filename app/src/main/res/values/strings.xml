@@ -11,7 +11,7 @@
     <string name="item1">OCR Scan</string>
 
     <!--Login page-->
-    <string name="btn_txt">Login</string>
+    <string name="btn_txt">Enter</string>
 
     <!--Notes page-->
     <string name="hello_world">Hello world!</string>
@@ -26,18 +26,18 @@
         <item>Italian</item>
         <item>Greek</item>
         <item>Japanese</item>
-        <item>Korean</item>
-        <item>Persian</item>
-        <item>Punjabi</item>
+
     </string-array>
     <string-array name="pref_general_entryValues">
-        <item>popularity</item>
-        <item>vote_average</item>
-        <item>favorites</item>
+        <item>it</item>
+        <item>el</item>
+        <item>ja</item>
     </string-array>
     <string name="pref_general_summary">Select a language to which text is to be converted</string>
     <string name="pref_general_key">select_language</string>
     <string name="english">English</string>
+    <string name="italian">Italian</string>
+
 
 
 </resources>

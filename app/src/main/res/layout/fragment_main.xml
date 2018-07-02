@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/login_bg"
     tools:context=".MainFragment">
 
     <!--ListView
@@ -16,7 +15,7 @@
         android:id="@+id/notes_gridview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:verticalSpacing="10dp"
+        android:verticalSpacing="6dp"
         style="@style/GridStyle" />
 
     <android.support.design.widget.FloatingActionButton

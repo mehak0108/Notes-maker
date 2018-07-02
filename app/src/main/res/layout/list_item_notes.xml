@@ -14,10 +14,10 @@
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:layout_marginTop="5dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp"
             android:elevation="200dp"
-            card_view:cardBackgroundColor="@color/white"
+            card_view:cardBackgroundColor="@android:color/holo_blue_light"
             card_view:cardCornerRadius="8dp">
 
             <LinearLayout
@@ -32,6 +32,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
+                    android:textColor="@color/white"
                     android:textStyle="bold"
                     android:layout_marginTop="4dp"
                     android:layout_marginBottom="15dp"

@@ -120,11 +120,12 @@ public class NotesActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         SharedPreferences prefs= PreferenceManager.getDefaultSharedPreferences(this);
-        String sort_by = prefs.getString(getString(R.string.pref_general_key), getString(R.string.english));
+        String sort_by = prefs.getString(getString(R.string.pref_general_key), getString(R.string.italian));
         if (mLanguage!=null && !sort_by.equals(mLanguage)){
             LanguageFragment mf=(LanguageFragment) getSupportFragmentManager().
                     findFragmentById(R.id.lang_notes);
             Log.e("done","gggg");
+
             /*Bundle args = new Bundle();
             if (getIntent().getParcelableExtra("Words")== null)
                 Log.v("not ok", "intent is null");
