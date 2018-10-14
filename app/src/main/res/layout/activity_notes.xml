@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-
+    android:id="@+id/lang_notes"
     android:name="com.example.mehak.notes_maker.LanguageFragment"
     xmlns:card_view ="http://schemas.android.com/apk/res-auto">
 
@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:id="@+id/lang_notes">
+        >
 
         <!-- Cardview-->
         <android.support.v7.widget.CardView
